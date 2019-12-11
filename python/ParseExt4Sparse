@@ -38,11 +38,10 @@ def sparse_chunks(header):
 
 with open(args.input, "rb") as input_fd:
     if sparse_header(input_fd.read(28)):
-        output_fd = open(args.output, "wb")
-        n = 0
-        while n < total_chunks:
-            sparse_chunks(input_fd.read(12))
-            n += 1
-        output_fd.close()
+        with open(args.output, "wb") as output_fd:
+            n = 0
+            while n < total_chunks:
+                sparse_chunks(input_fd.read(12))
+                n += 1
     else:
         print "Format Unknown"
